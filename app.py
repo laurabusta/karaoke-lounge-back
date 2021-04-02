@@ -26,7 +26,7 @@ def after_request(response):
 
 CORS(song, origins=['http://localhost:3000'], supports_credentials=True)
 
-app.register_blueprint(song, url_prefix='/api/v1/dogs')
+app.register_blueprint(song, url_prefix='/api/v1/songs')
 
 # The default URL ends in / ("my-website.com/").
 @app.route('/')
