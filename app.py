@@ -24,8 +24,7 @@ def after_request(response):
     g.db.close()
     return response
 
-CORS(song, origins=['http://localhost:3000'], supports_credentials=True)
-
+CORS(song, origins=['http://localhost:19006'], supports_credentials=True)
 app.register_blueprint(song, url_prefix='/api/v1/songs')
 
 # The default URL ends in / ("my-website.com/").
