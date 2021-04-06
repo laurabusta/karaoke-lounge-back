@@ -7,6 +7,9 @@ class Song(Model):
     title = CharField()
     artist = CharField()
     genre = CharField()
+    image = CharField()
+    song_code = CharField()
+    music_brainz_id = CharField()
     created_at = DateTimeField(default=datetime.datetime.now)
 
     class Meta:

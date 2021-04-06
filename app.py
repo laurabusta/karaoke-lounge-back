@@ -1,3 +1,6 @@
+# activate virtual environment in terminal >> . venv/bin/activate
+# start app from terminal with >> python3 app.py
+
 from flask import Flask, g
 from flask_cors import CORS
 
