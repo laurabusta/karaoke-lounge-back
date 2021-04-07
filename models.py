@@ -1,7 +1,20 @@
 from peewee import *
 import datetime
+from flask_login import UserMixin
 
 DATABASE = PostgresqlDatabase('karaoke')
+
+class Profile(UserMixin, Model):
+    username = CharField(unique=True)
+    email = CharField(unique=True)
+    password = CharField()
+    nickname = CharField()
+    fave_drink = CharField()
+    fave_genre = CharField()
+    profile_pic_URL = CharField()
+
+    class Meta:
+        database = DATABASE
 
 class Song(Model):
     title = CharField()
@@ -18,6 +31,6 @@ class Song(Model):
 
 def initialize():
     DATABASE.connect()
-    DATABASE.create_tables([Song], safe=True)
+    DATABASE.create_tables([Profile, Song], safe=True)
     print("TABLES Created")
     DATABASE.close()
