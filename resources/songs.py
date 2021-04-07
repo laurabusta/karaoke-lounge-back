@@ -38,4 +38,13 @@ def delete_song(song_id):
     query = models.Song.delete().where(models.Song.id==song_id)
     query.execute()
     return jsonify(data='resource successfully deleted', status={"code": 200, "message": "resource deleted successfully"})
+
+@song.route('/<song_id>', methods=["PUT"])
+def update_song(song_id):
+    payload = request.get_json()
+    query = models.Song.update(**payload).where(models.Song.id==song_id)
+    query.execute()
+    song = models.Song.get_by_id(song_id)
+    return jsonify(data=model_to_dict(song), status={"code": 200, "message": "resource updated successfully"})
+
     
