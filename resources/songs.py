@@ -9,7 +9,7 @@ song = Blueprint('songs', 'song')
 # test routes with postman using --> localhost:8000/api/v1/songs/
 
 @song.route('/', methods=["GET"])
-# @login_required # added this line to require login credentials to use route
+@login_required # added this line to require login credentials to use route
 def get_all_songs():
     ## find the songs and change each one to a dictionary into a new array
     try:
