@@ -2,7 +2,7 @@ import models
 
 from flask import request, jsonify, Blueprint
 from flask_bcrypt import generate_password_hash, check_password_hash
-from flask_login import login_user, current_user
+from flask_login import login_user, current_user, logout_user, login_required
 from playhouse.shortcuts import model_to_dict
 
 profile = Blueprint('profiles', 'profile') # do I need the url_prefix?
@@ -48,3 +48,9 @@ def login():
             return jsonify(data={}, status={"code": 401, "message": "Username or Password is incorrect"})
     except models.DoesNotExist:
         return jsonify(data={}, status={"code": 401, "message": "Username or Password is incorrect"})
+
+@profile.route('/logout', methods=["POST"])
+@login_required
+def logout():
+    logout_user()
+    return jsonify(data={}, status={"code": 200, "message": "Successful log out"})
