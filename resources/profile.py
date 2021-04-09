@@ -30,3 +30,21 @@ def register():
 
         return jsonify(data=profile_dict, status={"code": 201, "message": "Success"})
 
+@profile.route('/login', methods=["POST"])
+def login():
+    payload = request.get_json()
+    print('payload:', payload)
+    payload['email'] = payload['email'].lower() # make lower case
+
+    try:
+        profile = models.Profile.get(models.Profile.email == payload['email']) # Try to find the user by their email
+        profile_dict = model_to_dict(profile) # if you find the User model convert in to a dictionary so you can edit and jsonify it
+        if(check_password_hash(profile_dict['password'], payload['password'])): # use bcrypt to check password and see if input password matches
+            del profile_dict['password'] # delete the password since the client doesn't need it
+            login_user(profile) # set up the session
+            print(profile, ' this is user profile')
+            return jsonify(data=profile_dict, status={"code": 200, "message": "Success"}) # respond to the client
+        else:
+            return jsonify(data={}, status={"code": 401, "message": "Username or Password is incorrect"})
+    except models.DoesNotExist:
+        return jsonify(data={}, status={"code": 401, "message": "Username or Password is incorrect"})
