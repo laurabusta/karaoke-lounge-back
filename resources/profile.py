@@ -75,5 +75,12 @@ def update_profile(profile_id):
         query.execute()
         profile = models.Profile.get_by_id(profile_id)
         return jsonify(data=model_to_dict(profile), status={"code": 200, "message": "resource updated successfully"})
-    except models.DoesNotExist:
+    except AttributeError:
         return jsonify(data={}, status={"code": 401, "message": "Error getting the resources"})
+
+@profile.route('/<profile_id>', methods=["DELETE"])
+@login_required
+def delete_profile(profile_id):
+    query = models.Profile.delete().where(models.Profile.id==profile_id)
+    query.execute()
+    return jsonify(data='resource successfully deleted', status={"code": 200, "message": "resource deleted successfully"})
