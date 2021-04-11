@@ -2,7 +2,7 @@ import models
 
 from flask import Blueprint, jsonify, request
 from playhouse.shortcuts import model_to_dict
-from flask_login import login_required # need to import for login credential requirements
+from flask_login import login_required, current_user # need to import for login credential requirements
 
 song = Blueprint('songs', 'song')
 
@@ -23,6 +23,7 @@ def get_all_songs():
 def create_songs():
     ## see request payload anagolous to req.body in express
     payload = request.get_json()
+    payload['posted_by'] = current_user.id
     print(type(payload), 'payload')
     song = models.Song.create(**payload)
     ## see the object

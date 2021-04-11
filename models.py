@@ -24,6 +24,7 @@ class Song(Model):
     song_code = CharField()
     music_brainz_id = CharField()
     created_at = DateTimeField(default=datetime.datetime.now)
+    posted_by = ForeignKeyField(Profile, backref='profiles')
 
     class Meta:
         database = DATABASE

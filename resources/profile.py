@@ -19,7 +19,8 @@ def register():
         return jsonify(data={}, status={"code": 401, "message": "A user with that name already exists"})
     except models.DoesNotExist:
         payload['password'] = generate_password_hash(payload['password']) # bcrypt line for generating the hash
-        profile = models.Profile.create(**payload) # put the user in the database
+        # profile = models.Profile.create(**payload) # put the user in the database
+        profile = models.Profile.create(**payload)
         # starts user session
         login_user(profile)
         profile_dict = model_to_dict(profile) # puts user model into dictionary format
