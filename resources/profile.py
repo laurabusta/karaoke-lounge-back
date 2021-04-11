@@ -53,4 +53,15 @@ def login():
 @login_required
 def logout():
     logout_user()
+    print(current_user.__dict__)
     return jsonify(data={}, status={"code": 200, "message": "Successful log out"})
+
+@profile.route('/', methods=["GET"])
+@login_required
+def get_all_profiles():
+    try:
+        profiles = [model_to_dict(profile) for profile in models.Profile.select()]
+        print(profiles)
+        return jsonify(data=profiles, status={"code": 200, "message": "Success"})
+    except models.DoesNotExist:
+        return jsonify(data={}, status={"code": 401, "message": "Error getting the resources"})
