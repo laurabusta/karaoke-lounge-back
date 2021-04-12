@@ -8,6 +8,7 @@ from flask_login import LoginManager
 import models
 from resources.songs import song
 from resources.profile import profile
+from resources.posts import post
 
 DEBUG = True
 PORT = 8000
@@ -47,6 +48,9 @@ app.register_blueprint(song, url_prefix='/api/v1/songs')
 
 CORS(profile, origins=['http://localhost:19006'], supports_credentials=True)
 app.register_blueprint(profile, url_prefix='/api/v1/profile')
+
+CORS(post, origins=['http://localhost:19006'], supports_credentials=True)
+app.register_blueprint(post, url_prefix='/api/v1/posts')
 
 # The default URL ends in / ("my-website.com/").
 @app.route('/')

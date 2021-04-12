@@ -12,6 +12,7 @@ class Profile(UserMixin, Model):
     fave_drink = CharField()
     fave_genre = CharField()
     profile_pic_URL = CharField()
+    created_at = DateTimeField(default=datetime.datetime.now)
 
     class Meta:
         database = DATABASE
@@ -30,8 +31,20 @@ class Song(Model):
         database = DATABASE
 
 
+class Post(Model):
+    post_type = CharField()
+    title = CharField()
+    subtitle = CharField()
+    content = CharField()
+    song_ref = IntegerField()
+    posted_by = ForeignKeyField(Profile, backref='profiles')
+
+    class Meta:
+        database = DATABASE
+
+
 def initialize():
     DATABASE.connect()
-    DATABASE.create_tables([Profile, Song], safe=True)
+    DATABASE.create_tables([Profile, Song, Post], safe=True)
     print("TABLES Created")
     DATABASE.close()
