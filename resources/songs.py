@@ -19,6 +19,15 @@ def get_all_songs():
     except models.DoesNotExist:
         return jsonify(data={}, status={"code": 401, "message": "Error getting the resources"})
 
+@song.route('/user/<user_id>', methods=["GET"])
+def get_songs_by_user(user_id):
+    try:
+        songs = [model_to_dict(song) for song in models.Song.select().join(models.Profile).where(models.Profile.id == user_id)]
+        print(songs)
+        return jsonify(data=songs, status={"code": 200, "message": "Success"})
+    except models.DoesNotExist:
+        return jsonify(data={}, status={"code": 401, "message": "Error getting the resources"})
+
 @song.route('/', methods=["POST"])
 def create_songs():
     ## see request payload anagolous to req.body in express

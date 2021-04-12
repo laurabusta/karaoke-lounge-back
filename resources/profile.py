@@ -44,7 +44,9 @@ def login():
             del profile_dict['password'] # delete the password since the client doesn't need it
             login_user(profile) # set up the session
             print(profile, ' this is user profile')
-            return jsonify(data=profile_dict, status={"code": 200, "message": "Success"}) # respond to the client
+            login_response = jsonify(data=profile_dict, status={"code": 200, "message": "Success"})
+            print(login_response)
+            return login_response # respond to the client
         else:
             return jsonify(data={}, status={"code": 401, "message": "Username or Password is incorrect"})
     except models.DoesNotExist:
