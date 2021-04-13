@@ -69,6 +69,15 @@ def get_all_profiles():
     except models.DoesNotExist:
         return jsonify(data={}, status={"code": 401, "message": "Error getting the resources"})
 
+@profile.route('/<profile_id>', methods=["GET"])
+@login_required
+def get_profile(profile_id):
+    try:
+        profile = [model_to_dict(profile) for profile in models.Profile.select().where(models.Profile.id == profile_id)]
+        return jsonify(data=profile, status={"code": 200, "message": "Success"})
+    except models.DoesNotExist:
+        return jsonify(data={}, status={"code": 401, "message": "Error getting the resources"})
+
 @profile.route('/<profile_id>', methods=["PUT"])
 @login_required
 def update_profile(profile_id):

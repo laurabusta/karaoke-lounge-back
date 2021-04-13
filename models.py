@@ -37,6 +37,7 @@ class Post(Model):
     subtitle = CharField()
     content = CharField()
     song_ref = IntegerField()
+    created_at = DateTimeField(default=datetime.datetime.now)
     posted_by = ForeignKeyField(Profile, backref='profiles')
 
     class Meta:
